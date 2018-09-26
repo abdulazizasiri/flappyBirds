@@ -1,21 +1,28 @@
+/*
+Relative: relative to its self: PARENT
+
+absolute: align itslef to its parent ()Any thing whihc has relative. CHILD
+
+*/
 body {
     height: 100%;
     width: 100%;
     margin: 0 auto;
 }
-
 #container {
     position: relative;
+
     height: 400px;
     width: 100%;
     border: 2px solid ;
     background-color: aliceblue;
     background: url('bg.png');
-
     background-size: contain;
     overflow: hidden;
 }
-
+#result{
+  text-align: center;
+}
 #bird {
     position: absolute;
     background: url('fb.png');
