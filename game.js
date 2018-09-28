@@ -18,38 +18,38 @@ $( document ).ready(function() {
   var restart = $('#restart')
   var speed = $('#speed');
   var container_width = parseInt(container.width());
+  var container_height = parseInt(container.height());
   var p_pos = parseInt(wall.css('right'));
   var p_height = parseInt(wall.css('height'));
   var birds_left = parseInt(wall.css('left'));
-  var birds_height = parseInt(wall.height());
+  var bird_height = parseInt(bird.height());
   var velocity = 10;
   let fall = 0.6 ;
   let goUp = false ;
 
   var game_engine = setInterval(function(){
-    if (collision(bird,p1) || collision(bird,p2)) {
+    if (collision(bird,p1) || collision(bird,p2)
+  || parseInt(bird.css('top'))<=0 || parseInt(bird.css('top')) > container_height - bird_height) {
       console.log('Happy Accidents');
-
       stop_game();
     }
     else {
     var newWall = parseInt(wall.css('right'))
+
     if ( newWall > container_width){
       topPole = changePosition(p1);
       bottomPole = changePosition(p2);
-
-      topPole2 = changePosition(p1);
-      bottomPole1 = changePosition(p2);
+      if (newWall > container_width - birds_left) {
+        score.text(parseInt(score.text()) + 1)
+      }
       p1.css('height',topPole);
       p2.css('height',bottomPole);
 
-
-      p1.css('height',topPole);
-      p2.css('height',bottomPole1);
       newWall = 0;
       sp = parseInt(speed.text());
       sp = sp + 1 ;
       speed.text(sp);
+
     }
     // if score == 20 , then change speed. Not now thou + add a new character
     wall.css('right', newWall + velocity);
@@ -57,8 +57,8 @@ $( document ).ready(function() {
     if (goUp === false){
       goDown();
     }
-
-
+    console.log('Birds height'+$('#bird').css('top'))
+    console.log('Container height'+container_height) ; 400 - 100
     // Now, We need to deal with te keyboard events.
 }
   },40);
@@ -91,6 +91,9 @@ $( document ).ready(function() {
   function stop_game(){
     clearInterval(game_engine);
     restart.slideDown();
+    restart.on('click', function(){
+      location.reload();
+    })
     bird.css('display','none');
   }
 
