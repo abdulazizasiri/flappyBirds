@@ -6,7 +6,7 @@ $( document ).ready(function() {
     pole =  Math.floor(Math.random() * 130) + 30
     return pole;
   }
-  // fstxer to write the selecting thw whole object using $
+  // fstxer to write the selecting thw whole object using
   var container = $('#container'); //
   var bird = $('#bird'); // bird
   var wall = $('.wall');
@@ -17,33 +17,35 @@ $( document ).ready(function() {
   var speed = $('#speed');
   var container_width = parseInt(container.width());
   var container_height = parseInt(container.height());
-  // var p_pos = parseInt(wall.css('right'));
+  var p_pos = parseInt(wall.css('right'));
   var p_height = parseInt(wall.css('height'));
   var birds_left = parseInt(wall.css('left'));
   var bird_height = parseInt(bird.height());
+  var result = $('#result');
   var velocity = 20;
   let goUp = false ;
 
   var game_engine = setInterval(function(){
 
     if (collision(bird,p1) || collision(bird,p2)
-  || parseInt(bird.css('top'))<=0 || parseInt(bird.css('top')) >= container_height - bird_height) {
+  || parseInt(bird.css('top'))<=0 || parseInt(bird.css('top')) > container_height - bird_height) {
       stop_game();
     }
     else {
     var newWall = parseInt(wall.css('right'))
-    var left = parseInt(container.css('left'))
+    var left =   parseInt(container.css('left'))
 
     // console.log('Left'+left);
     if ( newWall > container_width){ // if it passed
       // We basically want to change the width of top and bottom walls
-      if (newWall > container_width - birds_left) {
-        score.text(parseInt(score.text()) + 1)
-      }
+
       topPole = changePosition(p1);
       bottomPole = changePosition(p2);
       p1.css('height',topPole);
       p2.css('height',bottomPole);
+      if (newWall > container_width) {
+        score.text(parseInt(score.text()) + 1)
+      }
 
       newWall = 0;
     }
@@ -61,7 +63,7 @@ $( document ).ready(function() {
 
   $(document).on('keydown', function(e){
     var key = e.keyCode;
-    if (key === 32 && goUp == false){
+    if (key === 38 && goUp == false){
       goUp = setInterval(up, 50);
     }
   })
@@ -69,7 +71,7 @@ $( document ).ready(function() {
 
   $(document).on('keyup', function(e){
     var key = e.keyCode;
-    if (key === 32){
+    if (key === 38){
       clearInterval(goUp)
       goUp = false;
     }
@@ -83,12 +85,13 @@ $( document ).ready(function() {
   }
   function stop_game(){
     clearInterval(game_engine);
-    restart.slideDown();
+    restart.slideDown('slow');
     restart.on('click', function(){
-      window.location = document.URL;
+      window.location.reload();
 
     })
     bird.css('display','none');
+    console.log(location.protocol)
   }
 
   function collision(div1, div2) {
