@@ -3,7 +3,7 @@
 $( document ).ready(function() {
 
   function changePosition(pole){
-    pole =  Math.floor(Math.random() * 130) + 30
+    pole =  Math.floor(Math.random() * 100) + 30
     return pole;
   }
   // fstxer to write the selecting thw whole object using
@@ -20,13 +20,12 @@ $( document ).ready(function() {
   var p_pos = parseInt(wall.css('right'));
   var p_height = parseInt(wall.css('height'));
   var birds_left = parseInt(wall.css('left'));
+  var smack = $('#hit')[0];
   var bird_height = parseInt(bird.height());
   var result = $('#result');
   var velocity = 20;
   let goUp = false ;
-
   var game_engine = setInterval(function(){
-
     if (collision(bird,p1) || collision(bird,p2)
   || parseInt(bird.css('top'))<=0 || parseInt(bird.css('top')) > container_height - bird_height) {
       stop_game();
@@ -87,10 +86,10 @@ $( document ).ready(function() {
     clearInterval(game_engine);
     restart.slideDown('slow');
     restart.on('click', function(){
-      window.location.reload();
+    window.location.reload();
 
     })
-    bird.css('display','none');
+    // bird.css('display','none');
     console.log(location.protocol)
   }
 
